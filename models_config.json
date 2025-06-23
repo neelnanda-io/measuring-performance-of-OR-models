@@ -1,0 +1,18 @@
+{
+  "models": [
+    "google/gemini-2.0-flash-exp:free",
+    "google/gemini-2.0-flash-preview",
+    "google/gemini-2.0-pro-exp",
+    "anthropic/claude-3.5-sonnet",
+    "openai/gpt-4o",
+    "openai/gpt-4o-mini",
+    "meta-llama/llama-3.2-90b-vision-instruct",
+    "qwen/qwen-2.5-72b-instruct"
+  ],
+  "test_settings": {
+    "max_prompts_per_model": 30,
+    "delay_between_requests": 0.5,
+    "max_tokens": 100000,
+    "temperature": 0.7
+  }
+}

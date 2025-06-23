@@ -1,0 +1,9 @@
+[
+  {
+    "id": "simple_definition",
+    "prompt": "Define photosynthesis in one sentence.",
+    "type": "simple_definition",
+    "input_tokens": 10,
+    "expected_output_tokens": 30
+  }
+]

@@ -1,0 +1,65 @@
+[
+  {
+    "id": "code_1",
+    "prompt": "Write a function that returns the sum of two numbers.",
+    "type": "coding",
+    "input_tokens": 13.0,
+    "expected_output_tokens": 200
+  },
+  {
+    "id": "code_2",
+    "prompt": "Create a function to check if a number is even or odd.",
+    "type": "coding",
+    "input_tokens": 15.600000000000001,
+    "expected_output_tokens": 200
+  },
+  {
+    "id": "code_3",
+    "prompt": "Write a program that prints 'Hello, World!'",
+    "type": "coding",
+    "input_tokens": 9.1,
+    "expected_output_tokens": 200
+  },
+  {
+    "id": "code_4",
+    "prompt": "Implement a function to reverse a string without using built-in reverse methods.",
+    "type": "coding",
+    "input_tokens": 15.600000000000001,
+    "expected_output_tokens": 500
+  },
+  {
+    "id": "code_5",
+    "prompt": "Write a binary search algorithm for a sorted array.",
+    "type": "coding",
+    "input_tokens": 11.700000000000001,
+    "expected_output_tokens": 500
+  },
+  {
+    "id": "code_6",
+    "prompt": "Create a class for a simple calculator with basic operations.",
+    "type": "coding",
+    "input_tokens": 13.0,
+    "expected_output_tokens": 500
+  },
+  {
+    "id": "code_7",
+    "prompt": "Implement a red-black tree data structure with insertion and deletion.",
+    "type": "coding",
+    "input_tokens": 13.0,
+    "expected_output_tokens": 1000
+  },
+  {
+    "id": "code_8",
+    "prompt": "Write a multithreaded web scraper that respects rate limits and handles errors gracefully.",
+    "type": "coding",
+    "input_tokens": 16.900000000000002,
+    "expected_output_tokens": 1000
+  },
+  {
+    "id": "code_9",
+    "prompt": "Design and implement a distributed hash table with consistent hashing and fault tolerance.",
+    "type": "coding",
+    "input_tokens": 16.900000000000002,
+    "expected_output_tokens": 1000
+  }
+]

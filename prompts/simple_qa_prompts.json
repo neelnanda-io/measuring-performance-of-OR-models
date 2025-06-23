@@ -1,0 +1,9 @@
+[
+  {
+    "id": "simple_question",
+    "prompt": "What is the capital of France?",
+    "type": "simple_qa",
+    "input_tokens": 8,
+    "expected_output_tokens": 10
+  }
+]

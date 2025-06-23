@@ -1,0 +1,44 @@
+[
+  {
+    "id": "story_1",
+    "prompt": "Write a haiku about winter.",
+    "type": "creative_writing",
+    "input_tokens": 6.5,
+    "expected_output_tokens": 50
+  },
+  {
+    "id": "story_2",
+    "prompt": "Write a short paragraph about a lost key.",
+    "type": "creative_writing",
+    "input_tokens": 10.4,
+    "expected_output_tokens": 100
+  },
+  {
+    "id": "story_3",
+    "prompt": "Write a one-page story about time travel.",
+    "type": "creative_writing",
+    "input_tokens": 9.1,
+    "expected_output_tokens": 500
+  },
+  {
+    "id": "story_4",
+    "prompt": "Write a detailed short story about a mysterious library.",
+    "type": "creative_writing",
+    "input_tokens": 11.700000000000001,
+    "expected_output_tokens": 1000
+  },
+  {
+    "id": "story_5",
+    "prompt": "Write a novella chapter about interstellar exploration.",
+    "type": "creative_writing",
+    "input_tokens": 9.1,
+    "expected_output_tokens": 2000
+  },
+  {
+    "id": "story_6",
+    "prompt": "Write an epic fantasy story with multiple characters and plot lines.",
+    "type": "creative_writing",
+    "input_tokens": 14.3,
+    "expected_output_tokens": 5000
+  }
+]

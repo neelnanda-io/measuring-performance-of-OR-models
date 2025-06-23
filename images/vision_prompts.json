@@ -1,0 +1,384 @@
+[
+  {
+    "id": "vision_single_1",
+    "prompt": "Describe what you see in this image. What shape and color is it?",
+    "type": "vision_single",
+    "images": [
+      "images/shape_1_star_orange.png"
+    ],
+    "input_tokens": 15,
+    "expected_output_tokens": 30,
+    "expected_answer": "orange star"
+  },
+  {
+    "id": "vision_single_2",
+    "prompt": "Describe what you see in this image. What shape and color is it?",
+    "type": "vision_single",
+    "images": [
+      "images/shape_2_diamond_red.png"
+    ],
+    "input_tokens": 15,
+    "expected_output_tokens": 30,
+    "expected_answer": "red diamond"
+  },
+  {
+    "id": "vision_single_3",
+    "prompt": "Describe what you see in this image. What shape and color is it?",
+    "type": "vision_single",
+    "images": [
+      "images/shape_3_square_green.png"
+    ],
+    "input_tokens": 15,
+    "expected_output_tokens": 30,
+    "expected_answer": "green square"
+  },
+  {
+    "id": "vision_single_4",
+    "prompt": "Describe what you see in this image. What shape and color is it?",
+    "type": "vision_single",
+    "images": [
+      "images/shape_4_diamond_green.png"
+    ],
+    "input_tokens": 15,
+    "expected_output_tokens": 30,
+    "expected_answer": "green diamond"
+  },
+  {
+    "id": "vision_single_5",
+    "prompt": "Describe what you see in this image. What shape and color is it?",
+    "type": "vision_single",
+    "images": [
+      "images/shape_5_triangle_yellow.png"
+    ],
+    "input_tokens": 15,
+    "expected_output_tokens": 30,
+    "expected_answer": "yellow triangle"
+  },
+  {
+    "id": "vision_single_6",
+    "prompt": "Describe what you see in this image. What shape and color is it?",
+    "type": "vision_single",
+    "images": [
+      "images/shape_6_rectangle_purple.png"
+    ],
+    "input_tokens": 15,
+    "expected_output_tokens": 30,
+    "expected_answer": "purple rectangle"
+  },
+  {
+    "id": "vision_single_7",
+    "prompt": "Describe what you see in this image. What shape and color is it?",
+    "type": "vision_single",
+    "images": [
+      "images/shape_7_star_red.png"
+    ],
+    "input_tokens": 15,
+    "expected_output_tokens": 30,
+    "expected_answer": "red star"
+  },
+  {
+    "id": "vision_single_8",
+    "prompt": "Describe what you see in this image. What shape and color is it?",
+    "type": "vision_single",
+    "images": [
+      "images/shape_8_square_purple.png"
+    ],
+    "input_tokens": 15,
+    "expected_output_tokens": 30,
+    "expected_answer": "purple square"
+  },
+  {
+    "id": "vision_single_9",
+    "prompt": "Describe what you see in this image. What shape and color is it?",
+    "type": "vision_single",
+    "images": [
+      "images/shape_9_square_purple.png"
+    ],
+    "input_tokens": 15,
+    "expected_output_tokens": 30,
+    "expected_answer": "purple square"
+  },
+  {
+    "id": "vision_single_10",
+    "prompt": "Describe what you see in this image. What shape and color is it?",
+    "type": "vision_single",
+    "images": [
+      "images/shape_10_square_red.png"
+    ],
+    "input_tokens": 15,
+    "expected_output_tokens": 30,
+    "expected_answer": "red square"
+  },
+  {
+    "id": "vision_single_11",
+    "prompt": "Describe what you see in this image. What shape and color is it?",
+    "type": "vision_single",
+    "images": [
+      "images/shape_11_square_purple.png"
+    ],
+    "input_tokens": 15,
+    "expected_output_tokens": 30,
+    "expected_answer": "purple square"
+  },
+  {
+    "id": "vision_single_12",
+    "prompt": "Describe what you see in this image. What shape and color is it?",
+    "type": "vision_single",
+    "images": [
+      "images/shape_12_diamond_blue.png"
+    ],
+    "input_tokens": 15,
+    "expected_output_tokens": 30,
+    "expected_answer": "blue diamond"
+  },
+  {
+    "id": "vision_single_13",
+    "prompt": "Describe what you see in this image. What shape and color is it?",
+    "type": "vision_single",
+    "images": [
+      "images/shape_13_square_blue.png"
+    ],
+    "input_tokens": 15,
+    "expected_output_tokens": 30,
+    "expected_answer": "blue square"
+  },
+  {
+    "id": "vision_single_14",
+    "prompt": "Describe what you see in this image. What shape and color is it?",
+    "type": "vision_single",
+    "images": [
+      "images/shape_14_star_red.png"
+    ],
+    "input_tokens": 15,
+    "expected_output_tokens": 30,
+    "expected_answer": "red star"
+  },
+  {
+    "id": "vision_single_15",
+    "prompt": "Describe what you see in this image. What shape and color is it?",
+    "type": "vision_single",
+    "images": [
+      "images/shape_15_circle_purple.png"
+    ],
+    "input_tokens": 15,
+    "expected_output_tokens": 30,
+    "expected_answer": "purple circle"
+  },
+  {
+    "id": "vision_single_16",
+    "prompt": "Describe what you see in this image. What shape and color is it?",
+    "type": "vision_single",
+    "images": [
+      "images/shape_16_triangle_blue.png"
+    ],
+    "input_tokens": 15,
+    "expected_output_tokens": 30,
+    "expected_answer": "blue triangle"
+  },
+  {
+    "id": "vision_single_17",
+    "prompt": "Describe what you see in this image. What shape and color is it?",
+    "type": "vision_single",
+    "images": [
+      "images/shape_17_rectangle_green.png"
+    ],
+    "input_tokens": 15,
+    "expected_output_tokens": 30,
+    "expected_answer": "green rectangle"
+  },
+  {
+    "id": "vision_single_18",
+    "prompt": "Describe what you see in this image. What shape and color is it?",
+    "type": "vision_single",
+    "images": [
+      "images/shape_18_square_blue.png"
+    ],
+    "input_tokens": 15,
+    "expected_output_tokens": 30,
+    "expected_answer": "blue square"
+  },
+  {
+    "id": "vision_single_19",
+    "prompt": "Describe what you see in this image. What shape and color is it?",
+    "type": "vision_single",
+    "images": [
+      "images/shape_19_triangle_orange.png"
+    ],
+    "input_tokens": 15,
+    "expected_output_tokens": 30,
+    "expected_answer": "orange triangle"
+  },
+  {
+    "id": "vision_single_20",
+    "prompt": "Describe what you see in this image. What shape and color is it?",
+    "type": "vision_single",
+    "images": [
+      "images/shape_20_diamond_red.png"
+    ],
+    "input_tokens": 15,
+    "expected_output_tokens": 30,
+    "expected_answer": "red diamond"
+  },
+  {
+    "id": "vision_multi_2_1",
+    "prompt": "Describe all 2 shapes you see in these images. List the color and shape of each.",
+    "type": "vision_multi_2",
+    "images": [
+      "images/multi_2_0_0_square_yellow.png",
+      "images/multi_2_0_1_star_blue.png"
+    ],
+    "input_tokens": 30,
+    "expected_output_tokens": 40,
+    "expected_answer": "yellow square, blue star"
+  },
+  {
+    "id": "vision_multi_2_2",
+    "prompt": "Describe all 2 shapes you see in these images. List the color and shape of each.",
+    "type": "vision_multi_2",
+    "images": [
+      "images/multi_2_1_0_diamond_blue.png",
+      "images/multi_2_1_1_star_red.png"
+    ],
+    "input_tokens": 30,
+    "expected_output_tokens": 40,
+    "expected_answer": "blue diamond, red star"
+  },
+  {
+    "id": "vision_multi_2_3",
+    "prompt": "Describe all 2 shapes you see in these images. List the color and shape of each.",
+    "type": "vision_multi_2",
+    "images": [
+      "images/multi_2_2_0_rectangle_purple.png",
+      "images/multi_2_2_1_diamond_blue.png"
+    ],
+    "input_tokens": 30,
+    "expected_output_tokens": 40,
+    "expected_answer": "purple rectangle, blue diamond"
+  },
+  {
+    "id": "vision_multi_3_1",
+    "prompt": "Describe all 3 shapes you see in these images. List the color and shape of each.",
+    "type": "vision_multi_3",
+    "images": [
+      "images/multi_3_0_0_circle_blue.png",
+      "images/multi_3_0_1_triangle_purple.png",
+      "images/multi_3_0_2_circle_orange.png"
+    ],
+    "input_tokens": 35,
+    "expected_output_tokens": 60,
+    "expected_answer": "blue circle, purple triangle, orange circle"
+  },
+  {
+    "id": "vision_multi_3_2",
+    "prompt": "Describe all 3 shapes you see in these images. List the color and shape of each.",
+    "type": "vision_multi_3",
+    "images": [
+      "images/multi_3_1_0_diamond_yellow.png",
+      "images/multi_3_1_1_circle_blue.png",
+      "images/multi_3_1_2_star_blue.png"
+    ],
+    "input_tokens": 35,
+    "expected_output_tokens": 60,
+    "expected_answer": "yellow diamond, blue circle, blue star"
+  },
+  {
+    "id": "vision_multi_3_3",
+    "prompt": "Describe all 3 shapes you see in these images. List the color and shape of each.",
+    "type": "vision_multi_3",
+    "images": [
+      "images/multi_3_2_0_rectangle_orange.png",
+      "images/multi_3_2_1_star_yellow.png",
+      "images/multi_3_2_2_square_red.png"
+    ],
+    "input_tokens": 35,
+    "expected_output_tokens": 60,
+    "expected_answer": "orange rectangle, yellow star, red square"
+  },
+  {
+    "id": "vision_multi_4_1",
+    "prompt": "Describe all 4 shapes you see in these images. List the color and shape of each.",
+    "type": "vision_multi_4",
+    "images": [
+      "images/multi_4_0_0_square_red.png",
+      "images/multi_4_0_1_rectangle_blue.png",
+      "images/multi_4_0_2_circle_blue.png",
+      "images/multi_4_0_3_rectangle_purple.png"
+    ],
+    "input_tokens": 40,
+    "expected_output_tokens": 80,
+    "expected_answer": "red square, blue rectangle, blue circle, purple rectangle"
+  },
+  {
+    "id": "vision_multi_4_2",
+    "prompt": "Describe all 4 shapes you see in these images. List the color and shape of each.",
+    "type": "vision_multi_4",
+    "images": [
+      "images/multi_4_1_0_square_blue.png",
+      "images/multi_4_1_1_star_orange.png",
+      "images/multi_4_1_2_triangle_red.png",
+      "images/multi_4_1_3_triangle_blue.png"
+    ],
+    "input_tokens": 40,
+    "expected_output_tokens": 80,
+    "expected_answer": "blue square, orange star, red triangle, blue triangle"
+  },
+  {
+    "id": "vision_multi_4_3",
+    "prompt": "Describe all 4 shapes you see in these images. List the color and shape of each.",
+    "type": "vision_multi_4",
+    "images": [
+      "images/multi_4_2_0_diamond_red.png",
+      "images/multi_4_2_1_square_orange.png",
+      "images/multi_4_2_2_rectangle_yellow.png",
+      "images/multi_4_2_3_square_red.png"
+    ],
+    "input_tokens": 40,
+    "expected_output_tokens": 80,
+    "expected_answer": "red diamond, orange square, yellow rectangle, red square"
+  },
+  {
+    "id": "vision_multi_5_1",
+    "prompt": "Describe all 5 shapes you see in these images. List the color and shape of each.",
+    "type": "vision_multi_5",
+    "images": [
+      "images/multi_5_0_0_triangle_blue.png",
+      "images/multi_5_0_1_rectangle_yellow.png",
+      "images/multi_5_0_2_diamond_green.png",
+      "images/multi_5_0_3_diamond_green.png",
+      "images/multi_5_0_4_rectangle_red.png"
+    ],
+    "input_tokens": 45,
+    "expected_output_tokens": 100,
+    "expected_answer": "blue triangle, yellow rectangle, green diamond, green diamond, red rectangle"
+  },
+  {
+    "id": "vision_multi_5_2",
+    "prompt": "Describe all 5 shapes you see in these images. List the color and shape of each.",
+    "type": "vision_multi_5",
+    "images": [
+      "images/multi_5_1_0_diamond_blue.png",
+      "images/multi_5_1_1_circle_red.png",
+      "images/multi_5_1_2_diamond_yellow.png",
+      "images/multi_5_1_3_diamond_red.png",
+      "images/multi_5_1_4_diamond_orange.png"
+    ],
+    "input_tokens": 45,
+    "expected_output_tokens": 100,
+    "expected_answer": "blue diamond, red circle, yellow diamond, red diamond, orange diamond"
+  },
+  {
+    "id": "vision_multi_5_3",
+    "prompt": "Describe all 5 shapes you see in these images. List the color and shape of each.",
+    "type": "vision_multi_5",
+    "images": [
+      "images/multi_5_2_0_circle_orange.png",
+      "images/multi_5_2_1_triangle_green.png",
+      "images/multi_5_2_2_rectangle_red.png",
+      "images/multi_5_2_3_triangle_blue.png",
+      "images/multi_5_2_4_square_green.png"
+    ],
+    "input_tokens": 45,
+    "expected_output_tokens": 100,
+    "expected_answer": "orange circle, green triangle, red rectangle, blue triangle, green square"
+  }
+]

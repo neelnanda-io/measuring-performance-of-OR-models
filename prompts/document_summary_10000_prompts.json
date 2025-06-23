@@ -1,0 +1,8 @@
+[
+  {
+    "prompt": "Please summarize the following text in 2-3 sentences:\n\nA cryptocurrency is a digital currency designed to work through a computer network that is not reliant on any central authority, such as a government or bank, to uphold or maintain it.",
+    "type": "document_summary_10000",
+    "input_tokens": 10000,
+    "expected_output_tokens": 50
+  }
+]

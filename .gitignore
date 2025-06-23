@@ -1,0 +1,9 @@
+api.secrets
+*.pyc
+__pycache__/
+.env
+.venv/
+venv/
+results/*.csv
+*.log
+.DS_Store
