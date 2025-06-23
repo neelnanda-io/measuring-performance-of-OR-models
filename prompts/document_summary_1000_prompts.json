@@ -1,6 +1,7 @@
 [
   {
-    "prompt": "Please summarize the following text in 2-3 sentences:\n\nArtificial intelligence (AI) is the capability of computational systems to perform tasks typically associated with human intelligence, such as learning, reasoning, problem-solving, perception, and decision-making. It is a field of research in computer science that develops and studies methods and software that enable machines to perceive their environment and use learning and intelligence to take actions that maximize their chances of achieving defined goals.",
+    "id": "document_summary_1000_1",
+    "prompt": "Please summarize the following text in 2-3 sentences:\n\nMachine learning (ML) is a field of study in artificial intelligence concerned with the development and study of statistical algorithms that can learn from data and generalise to unseen data, and thus perform tasks without explicit instructions. Within a subdiscipline in machine learning, advances in the field of deep learning have allowed neural networks, a class of statistical algorithms, to surpass many previous machine learning approaches in performance.",
     "type": "document_summary_1000",
     "input_tokens": 1000,
     "expected_output_tokens": 50

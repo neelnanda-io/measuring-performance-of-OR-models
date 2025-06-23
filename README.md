@@ -4,12 +4,14 @@ A comprehensive benchmarking tool for measuring the performance characteristics 
 
 ## Features
 
-- **Comprehensive Testing**: 70+ diverse prompts across 17+ categories
-- **Multi-Modal Support**: Text, code, math, vision tasks, and long context
-- **Detailed Metrics**: Time to first token, throughput, total response time
-- **Batch Testing**: Test multiple models automatically
-- **Rich Analysis**: Statistical summaries, correlations, and visualizations
-- **Professional Reports**: Automated markdown reports with key insights
+- **🚀 Async Parallel Testing**: Up to 5x faster with concurrent requests and smart retry logic
+- **📊 Comprehensive Testing**: 70+ diverse prompts across 17+ categories
+- **🖼️ Multi-Modal Support**: Text, code, math, vision tasks, and long context
+- **⚡ Detailed Metrics**: Time to first token, throughput, total response time
+- **🔄 Smart Error Handling**: Automatic retry for rate limits, robust filtering
+- **🎯 Batch Testing**: Test multiple models automatically
+- **📈 Rich Analysis**: Statistical summaries, correlations, and visualizations
+- **📄 Professional Reports**: Automated markdown reports with key insights
 
 ## Test Categories
 
@@ -26,9 +28,13 @@ A comprehensive benchmarking tool for measuring the performance characteristics 
 
 1. Clone this repository
 2. Install dependencies: `pip install -r requirements.txt` 
-3. Set your OpenRouter API key:
+3. Set your OpenRouter API key (choose one method):
    ```bash
+   # Method 1: Environment variable
    export OPENROUTER_API_KEY=your_key_here
+   
+   # Method 2: Create api.secrets file
+   echo "OPENROUTER_API_KEY=your_key_here" > api.secrets
    ```
 4. Generate test data:
    ```bash
@@ -38,23 +44,39 @@ A comprehensive benchmarking tool for measuring the performance characteristics 
 
 ## Usage
 
-### Single Model Testing
+### 🚀 Fast Async Testing (Recommended)
+
+**Single Model:**
 ```bash
-# Test specific model
-python measure_performance.py google/gemini-2.0-flash-exp:free
+# Fast parallel testing (5x faster)
+python measure_performance_async.py "google/gemini-2.0-flash-exp:free"
 
-# Limit number of prompts (for quick testing)
-python measure_performance.py google/gemini-2.0-flash-exp:free --max-prompts 10
+# Conservative concurrency (safer for rate limits)
+python measure_performance_async.py "google/gemini-2.0-flash-exp:free" --max-concurrent 3
 
-# Custom output file
-python measure_performance.py MODEL_NAME --output my_results.csv
+# Quick test with limited prompts
+python measure_performance_async.py "google/gemini-2.0-flash-exp:free" --max-prompts 10
 ```
 
-### Multi-Model Testing
+**Multi-Model Testing:**
 ```bash
-# Edit models_config.json to specify models
-python run_tests.py
+# Test multiple models automatically
+python run_async_tests.py
 ```
+
+### 🐌 Original Serial Testing
+```bash
+# Slower but ultra-safe (20s delay between requests)
+python measure_performance.py "google/gemini-2.0-flash-exp:free"
+```
+
+### 📊 Key Performance Options
+
+| Flag | Purpose | Recommended Values |
+|------|---------|-------------------|
+| `--max-concurrent` | Parallel requests | 3-5 (conservative), 10+ (aggressive) |
+| `--max-prompts` | Limit test size | 10 (quick), 50+ (comprehensive) |
+| `--output` | Custom filename | Auto-generated with model name + timestamp |
 
 ### Analysis
 
@@ -158,11 +180,33 @@ The project includes three interactive Python files optimized for VS Code's Pyth
 4. Modify variables and re-run for custom analysis
 5. Export results for further processing
 
+## 🔧 Smart Error Handling & Retry Logic
+
+### Automatic Retries
+- **Rate limit errors (429)**: Wait 20 seconds, retry up to 4 times
+- **Temporary failures**: Same retry logic for network issues
+- **Non-recoverable errors**: Fail immediately (auth, model not found, etc.)
+
+### Robust Data Filtering
+The analysis automatically excludes:
+- ❌ Failed requests (`success != True`)
+- ❌ Zero output token responses
+- ❌ Invalid timing data (`total_time <= 0`)
+- ❌ Corrupted throughput calculations
+
+### Output File Naming
+Default filenames include model name and timestamp for easy identification:
+```bash
+# Examples:
+google_gemini-2.0-flash-exp_free_20250123_143027.csv
+anthropic_claude-3-5-sonnet_20250123_143152.csv
+```
+
 ## Performance Notes
 
 - Tests are sorted by complexity (simple first) for easier debugging
-- Automatic retry logic for API failures
-- Respectful rate limiting between requests (20s default)
+- OpenRouter requests include app identification ("Performance Measurement Tool")
+- Improved token estimation (more accurate than simple word counting)
 - Support for vision models with base64 image encoding
 - Handles edge cases like empty responses and timeouts
-- Interactive analysis supports real-time exploration and follow-up questions
+- Concurrent request management with semaphore-based rate limiting

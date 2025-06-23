@@ -12,6 +12,10 @@ from pathlib import Path
 from typing import List, Dict, Any, Optional
 import os
 import sys
+from dotenv import load_dotenv, find_dotenv
+
+# This searches up the directory tree until it finds a .env file
+load_dotenv(find_dotenv())
 
 from openai import OpenAI
 from tqdm import tqdm
@@ -20,24 +24,66 @@ class PerformanceMeasurer:
     def __init__(self, api_key: str, model_name: str):
         self.client = OpenAI(
             base_url="https://openrouter.ai/api/v1",
-            api_key=api_key
+            api_key=api_key,
+            default_headers={
+                "HTTP-Referer": "https://github.com/neelnanda/performance-measurement",
+                "X-Title": "Performance Measurement Tool"
+            }
         )
         self.model_name = model_name
         self.results = []
     
     def load_api_key(self) -> str:
-        """Load API key from environment variable."""
+        """Load API key from environment variable or api.secrets file."""
+        # First try environment variable
         api_key = os.getenv('OPENROUTER_API_KEY')
-        if not api_key:
-            print("Error: OPENROUTER_API_KEY environment variable not found.")
-            print("Please set it with: export OPENROUTER_API_KEY=your_key_here")
-            sys.exit(1)
-        return api_key
+        if api_key:
+            return api_key
+        
+        # Try loading from api.secrets file
+        secrets_file = Path("api.secrets")
+        if secrets_file.exists():
+            try:
+                with open(secrets_file, 'r') as f:
+                    for line in f:
+                        line = line.strip()
+                        if line.startswith('OPENROUTER_API_KEY='):
+                            return line.split('=', 1)[1].strip('"\'')
+            except Exception as e:
+                print(f"Error reading api.secrets: {e}")
+        
+        print("Error: OPENROUTER_API_KEY not found.")
+        print("Please either:")
+        print("1. Set environment variable: export OPENROUTER_API_KEY=your_key_here")
+        print("2. Create api.secrets file with: OPENROUTER_API_KEY=your_key_here")
+        sys.exit(1)
     
     def encode_image(self, image_path: str) -> str:
         """Encode image to base64."""
         with open(image_path, "rb") as image_file:
             return base64.b64encode(image_file.read()).decode('utf-8')
+    
+    def estimate_tokens(self, text: str) -> int:
+        """
+        More accurate token estimation.
+        
+        OpenAI/GPT tokenizers typically follow these patterns:
+        - ~4 characters per token on average
+        - Common words are often single tokens
+        - Punctuation and special characters can be separate tokens
+        """
+        if not text:
+            return 0
+        
+        # Basic approach: character count / 4, but with adjustments
+        char_based = len(text) / 4
+        
+        # Word-based adjustment for very short texts
+        words = len(text.split())
+        word_based = words * 1.3  # Average 1.3 tokens per word
+        
+        # Use the more conservative estimate for accuracy
+        return int(min(char_based, word_based))
     
     def prepare_messages(self, prompt_data: Dict[str, Any]) -> List[Dict[str, Any]]:
         """Prepare messages for the API call."""
@@ -74,9 +120,9 @@ class PerformanceMeasurer:
         """Measure performance for a single prompt."""
         messages = self.prepare_messages(prompt_data)
         
-        # Calculate actual input tokens (rough estimate)
+        # Calculate actual input tokens (more accurate estimate)
         input_text = prompt_data['prompt']
-        estimated_input_tokens = len(input_text.split()) * 1.3  # Rough approximation
+        estimated_input_tokens = self.estimate_tokens(input_text)
         
         try:
             start_time = time.time()
@@ -111,11 +157,17 @@ class PerformanceMeasurer:
             time_to_first_token = first_token_time - start_time if first_token_time else 0
             
             # Estimate output tokens
-            output_tokens = len(response_text.split()) * 1.3
-            actual_output_tokens = max(output_tokens, 1)  # Avoid division by zero
+            actual_output_tokens = self.estimate_tokens(response_text)
+            actual_output_tokens = max(actual_output_tokens, 1)  # Avoid division by zero
             
             # Calculate throughput (tokens per second)
+            # Use generation time (excluding time to first token) for throughput
             generation_time = end_time - (first_token_time or start_time)
+            
+            # For very fast responses, use total time to avoid inflated numbers
+            if generation_time < 0.1:  # Less than 100ms
+                generation_time = total_time
+            
             throughput = actual_output_tokens / generation_time if generation_time > 0 else 0
             
             result = {
@@ -227,9 +279,16 @@ def main():
     parser = argparse.ArgumentParser(description="Measure OpenRouter model performance")
     parser.add_argument("model", help="OpenRouter model name (e.g., google/gemini-2.0-flash-exp:free)")
     parser.add_argument("--max-prompts", type=int, help="Maximum number of prompts to test")
-    parser.add_argument("--output", default="performance_results.csv", help="Output CSV filename")
+    parser.add_argument("--output", help="Output CSV filename (default: auto-generated with model name + timestamp)")
     
     args = parser.parse_args()
+    
+    # Generate output filename if not provided
+    if not args.output:
+        import datetime
+        timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
+        model_safe = args.model.replace("/", "_").replace(":", "_")
+        args.output = f"{model_safe}_{timestamp}.csv"
     
     # Initialize measurer
     measurer = PerformanceMeasurer("", args.model)

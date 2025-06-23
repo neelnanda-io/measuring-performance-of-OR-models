@@ -1,5 +1,6 @@
 [
   {
+    "id": "number_list_100k_1",
     "prompt": "List all numbers from 1 to 100000, separated by commas.",
     "type": "number_list_100k",
     "input_tokens": 20,

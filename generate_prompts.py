@@ -97,10 +97,11 @@ def generate_document_tasks():
     tasks = []
     token_sizes = [1000, 5000, 10000, 50000, 100000]
     
-    for tokens in token_sizes:
+    for i, tokens in enumerate(token_sizes):
         topic = random.choice(wiki_topics)
         content = get_wikipedia_content(topic, tokens)
         tasks.append({
+            "id": f"document_summary_{tokens}_{i+1}",
             "prompt": f"Please summarize the following text in 2-3 sentences:\n\n{content}",
             "type": f"document_summary_{tokens}",
             "input_tokens": tokens,
@@ -115,10 +116,11 @@ def generate_repetitive_tasks():
     words = ["apple", "science", "democracy", "quantum", "stellar"]
     token_sizes = [1000, 10000, 50000, 100000]
     
-    for tokens in token_sizes:
+    for i, tokens in enumerate(token_sizes):
         word = random.choice(words)
         content = generate_repetitive_content(word, tokens)
         tasks.append({
+            "id": f"repetitive_word_{tokens}_{i+1}",
             "prompt": f"What word is repeated in the following text?\n\n{content}",
             "type": f"repetitive_word_{tokens}",
             "input_tokens": tokens,
@@ -131,18 +133,21 @@ def generate_high_output_tasks():
     """Generate tasks that should produce very long outputs."""
     tasks = [
         {
+            "id": "number_list_10k_1",
             "prompt": "List all numbers from 1 to 10000, separated by commas.",
             "type": "number_list_10k",
             "input_tokens": 20,
             "expected_output_tokens": 50000
         },
         {
+            "id": "number_list_100k_1",
             "prompt": "List all numbers from 1 to 100000, separated by commas.",
             "type": "number_list_100k",
             "input_tokens": 20,
             "expected_output_tokens": 100000
         },
         {
+            "id": "long_encyclopedia_1",
             "prompt": "Write a comprehensive encyclopedia entry about artificial intelligence, covering history, current state, applications, challenges, and future prospects. Be extremely detailed and thorough.",
             "type": "long_encyclopedia",
             "input_tokens": 50,

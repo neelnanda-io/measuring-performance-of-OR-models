@@ -6,3 +6,5 @@ venv/
 results/*.csv
 *.log
 .DS_Store
+api.secrets
+api.secret

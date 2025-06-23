@@ -22,12 +22,16 @@ class ResultsAnalyzer:
         self.models = self.df['model_name'].unique().tolist()
         
     def load_data(self) -> pd.DataFrame:
-        """Load data from CSV files."""
+        """Load data from CSV files and filter for valid results."""
         dfs = []
+        total_rows = 0
+        
         for file in self.csv_files:
             if Path(file).exists():
                 df = pd.read_csv(file)
+                total_rows += len(df)
                 dfs.append(df)
+                print(f"Loaded {len(df)} rows from {file}")
             else:
                 print(f"Warning: File {file} not found")
         
@@ -35,14 +39,47 @@ class ResultsAnalyzer:
             raise ValueError("No valid CSV files found")
         
         combined_df = pd.concat(dfs, ignore_index=True)
+        print(f"Total rows before filtering: {len(combined_df)}")
         
-        # Filter successful tests only
+        # Convert success column to boolean if it's a string
+        if combined_df['success'].dtype == 'object':
+            combined_df['success'] = combined_df['success'].map({'True': True, 'TRUE': True, True: True, 'False': False, 'FALSE': False, False: False})
+        
+        # Filter for successful tests only
         successful_df = combined_df[combined_df['success'] == True].copy()
+        print(f"Successful tests: {len(successful_df)}")
+        
+        # Filter out zero output token results
+        before_zero_filter = len(successful_df)
+        successful_df = successful_df[successful_df['output_tokens'] > 0].copy()
+        print(f"After removing zero output tokens: {len(successful_df)} (removed {before_zero_filter - len(successful_df)})")
+        
+        # Filter out zero total time results (invalid)
+        before_time_filter = len(successful_df)
+        successful_df = successful_df[successful_df['total_time'] > 0].copy()
+        print(f"After removing zero total time: {len(successful_df)} (removed {before_time_filter - len(successful_df)})")
+        
+        # Filter out invalid throughput (should be positive)
+        before_throughput_filter = len(successful_df)
+        successful_df = successful_df[successful_df['throughput_tokens_per_sec'] > 0].copy()
+        print(f"After removing zero throughput: {len(successful_df)} (removed {before_throughput_filter - len(successful_df)})")
+        
+        if len(successful_df) == 0:
+            raise ValueError("No valid test results found after filtering")
         
         # Calculate additional metrics
         successful_df['total_tokens'] = successful_df['input_tokens'] + successful_df['output_tokens']
         successful_df['time_per_input_token'] = successful_df['time_to_first_token'] / successful_df['input_tokens'].clip(lower=1)
         successful_df['time_per_total_token'] = successful_df['total_time'] / successful_df['total_tokens'].clip(lower=1)
+        
+        # Show error summary
+        failed_df = combined_df[combined_df['success'] != True]
+        if len(failed_df) > 0:
+            print(f"\nError Summary ({len(failed_df)} failed tests):")
+            error_counts = failed_df['error'].value_counts()
+            for error, count in error_counts.head(5).items():
+                error_short = error[:100] + "..." if len(str(error)) > 100 else error
+                print(f"  - {count}x: {error_short}")
         
         return successful_df
     
