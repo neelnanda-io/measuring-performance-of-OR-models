@@ -59,8 +59,8 @@ def main():
     
     # Models to test
     models = [
-        "google/gemini-2.0-flash-exp:free",
-        "google/gemini-2.5-flash-lite-preview-06-17"
+        "google/gemini-2.5-flash-lite-preview-06-17",
+        "google/gemini-2.0-flash-exp:free"
     ]
     
     # Configuration

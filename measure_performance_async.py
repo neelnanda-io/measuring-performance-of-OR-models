@@ -111,7 +111,7 @@ class AsyncPerformanceMeasurer:
         
         return messages
     
-    async def make_api_request(self, session: aiohttp.ClientSession, messages: List[Dict[str, Any]]) -> Dict[str, Any]:
+    async def make_api_request(self, session: aiohttp.ClientSession, messages: List[Dict[str, Any]], prompt_data: Dict[str, Any]) -> Dict[str, Any]:
         """Make async API request with streaming."""
         headers = {
             "Authorization": f"Bearer {self.api_key}",
@@ -120,10 +120,15 @@ class AsyncPerformanceMeasurer:
             "X-Title": "Performance Measurement Tool"
         }
         
+        # Calculate appropriate max_tokens based on expected output
+        expected_output = prompt_data.get('expected_output_tokens', 4000)
+        # Cap at reasonable limits to avoid model-specific issues
+        max_tokens = min(expected_output * 1.2, 100000)
+        
         payload = {
             "model": self.model_name,
             "messages": messages,
-            "max_tokens": 100000,
+            "max_tokens": int(max_tokens),
             "temperature": 0.7,
             "stream": True
         }
@@ -184,7 +189,7 @@ class AsyncPerformanceMeasurer:
             
             for attempt in range(max_retries):
                 try:
-                    response_data = await self.make_api_request(session, messages)
+                    response_data = await self.make_api_request(session, messages, prompt_data)
                     
                     # Calculate metrics
                     start_time = response_data['start_time']
@@ -245,7 +250,12 @@ class AsyncPerformanceMeasurer:
                         continue
                     else:
                         # Final failure or non-rate-limit error
-                        print(f"✗ {prompt_data.get('id', 'unknown')}: Error - {error_str}")
+                        # Show more details for debugging
+                        if len(error_str) > 200:
+                            error_summary = error_str[:200] + "..."
+                        else:
+                            error_summary = error_str
+                        print(f"✗ {prompt_data.get('id', 'unknown')}: Error - {error_summary}")
                         return {
                             'model_name': self.model_name,
                             'prompt_id': prompt_data.get('id', 'unknown'),
@@ -356,10 +366,11 @@ def load_all_prompts() -> List[Dict[str, Any]]:
 
 async def main():
     parser = argparse.ArgumentParser(description="Async OpenRouter model performance measurement")
-    parser.add_argument("model", help="OpenRouter model name (e.g., google/gemini-2.0-flash-exp:free)")
+    parser.add_argument("model", help="OpenRouter model name (e.g., google/gemini-2.5-flash-lite-preview-06-17)")
     parser.add_argument("--max-prompts", type=int, help="Maximum number of prompts to test")
     parser.add_argument("--output", help="Output CSV filename (default: auto-generated with model name + timestamp)")
-    parser.add_argument("--max-concurrent", type=int, default=5, help="Maximum concurrent requests")
+    parser.add_argument("--max-concurrent", type=int, default=1000, help="Maximum concurrent requests")
+    parser.add_argument("--include-long", action="store_true", help="Include tasks with >50K input or output tokens (warning: very expensive!)")
     
     args = parser.parse_args()
     
@@ -389,6 +400,14 @@ async def main():
     if not prompts:
         print("No prompts found! Run generate_prompts.py and generate_images.py first.")
         sys.exit(1)
+    
+    # Filter out long tasks unless explicitly requested
+    if not args.include_long:
+        original_count = len(prompts)
+        prompts = [p for p in prompts if not p.get('is_long', False)]
+        filtered_count = original_count - len(prompts)
+        if filtered_count > 0:
+            print(f"Filtered out {filtered_count} long tasks (>50K tokens). Use --include-long to include them.")
     
     # Sort prompts by expected complexity (simple first for testing)
     def prompt_complexity(p):

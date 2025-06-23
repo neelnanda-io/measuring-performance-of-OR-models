@@ -4,6 +4,7 @@
     "prompt": "Write a comprehensive encyclopedia entry about artificial intelligence, covering history, current state, applications, challenges, and future prospects. Be extremely detailed and thorough.",
     "type": "long_encyclopedia",
     "input_tokens": 50,
-    "expected_output_tokens": 10000
+    "expected_output_tokens": 10000,
+    "is_long": false
   }
 ]

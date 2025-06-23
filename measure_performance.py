@@ -277,9 +277,10 @@ def load_all_prompts() -> List[Dict[str, Any]]:
 
 def main():
     parser = argparse.ArgumentParser(description="Measure OpenRouter model performance")
-    parser.add_argument("model", help="OpenRouter model name (e.g., google/gemini-2.0-flash-exp:free)")
+    parser.add_argument("model", help="OpenRouter model name (e.g., google/gemini-2.5-flash-lite-preview-06-17)")
     parser.add_argument("--max-prompts", type=int, help="Maximum number of prompts to test")
     parser.add_argument("--output", help="Output CSV filename (default: auto-generated with model name + timestamp)")
+    parser.add_argument("--include-long", action="store_true", help="Include tasks with >50K input or output tokens (warning: very expensive!)")
     
     args = parser.parse_args()
     
@@ -300,6 +301,14 @@ def main():
     if not prompts:
         print("No prompts found! Run generate_prompts.py and generate_images.py first.")
         sys.exit(1)
+    
+    # Filter out long tasks unless explicitly requested
+    if not args.include_long:
+        original_count = len(prompts)
+        prompts = [p for p in prompts if not p.get('is_long', False)]
+        filtered_count = original_count - len(prompts)
+        if filtered_count > 0:
+            print(f"Filtered out {filtered_count} long tasks (>50K tokens). Use --include-long to include them.")
     
     # Sort prompts by expected complexity (simple first for testing)
     def prompt_complexity(p):

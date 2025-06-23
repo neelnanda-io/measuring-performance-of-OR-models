@@ -4,6 +4,7 @@
     "prompt": "List all numbers from 1 to 10000, separated by commas.",
     "type": "number_list_10k",
     "input_tokens": 20,
-    "expected_output_tokens": 50000
+    "expected_output_tokens": 50000,
+    "is_long": false
   }
 ]

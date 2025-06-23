@@ -20,9 +20,12 @@ A comprehensive benchmarking tool for measuring the performance characteristics 
 - **Coding Challenges**: Simple functions to complex algorithms
 - **Creative Writing**: Haikus to full novellas
 - **Document Processing**: Summarization of 1K-100K token documents
-- **Long Context**: Repetitive text recognition up to 100K tokens
+- **Long Context**: Repetitive text recognition up to 900K tokens
 - **High Output**: Number sequences, encyclopedia entries
 - **Vision Tasks**: Geometric shape recognition (1-5 images per prompt)
+- **🚨 Extreme Scale Tasks** (requires `--include-long`):
+  - **Repetitive Word**: 250K, 500K, 900K token inputs
+  - **Repeat After Me**: 10K-450K token sequences using simple dictionary words
 
 ## Setup
 
@@ -76,7 +79,11 @@ python measure_performance.py "google/gemini-2.0-flash-exp:free"
 |------|---------|-------------------|
 | `--max-concurrent` | Parallel requests | 3-5 (conservative), 10+ (aggressive) |
 | `--max-prompts` | Limit test size | 10 (quick), 50+ (comprehensive) |
+| `--include-long` | Include >50K token tasks | ⚠️ **WARNING: Very expensive!** |
 | `--output` | Custom filename | Auto-generated with model name + timestamp |
+
+### ⚠️ **Long Tasks Warning**
+The `--include-long` flag includes extreme-scale tasks with 50K-900K tokens. These can be **very expensive** (potentially hundreds of dollars per test) and may hit model context limits. Use with caution!
 
 ### Analysis
 
@@ -201,6 +208,117 @@ Default filenames include model name and timestamp for easy identification:
 google_gemini-2.0-flash-exp_free_20250123_143027.csv
 anthropic_claude-3-5-sonnet_20250123_143152.csv
 ```
+
+## 📊 Performance Analysis Results
+
+### Key Performance Benchmarks (Based on Recent Testing)
+
+| Model | Avg Throughput | TTFT (Short) | TTFT (Long) | Best Use Case |
+|-------|---------------|--------------|-------------|---------------|
+| **Gemini 2.5 Flash** | **2,396 tok/s** | 0.266s | Variable | High-volume generation |
+| **Gemini 2.5 Flash Lite** | 1,114 tok/s | **0.005s** | Low latency | Real-time applications |
+| **Gemini 2.5 Pro** | 106 tok/s | 7.879s | Consistent | Quality-focused tasks |
+
+### Scaling Characteristics
+
+**Time to First Token (TTFT) vs Input Size:**
+- **Flash Lite**: Strong positive correlation (0.697) - TTFT increases predictably with input length
+- **Flash**: Strong positive correlation (0.741) - Similar scaling pattern
+- **Pro**: Weak correlation (-0.055) - More consistent regardless of input size
+
+**Throughput vs Output Size:**
+- All models show weak negative correlation with output size (-0.024 to -0.062)
+- Throughput remains relatively stable across different output lengths
+- Flash models show higher variance but better peak performance
+
+**Linear Regression Coefficients:**
+```
+TTFT = β₀ + β₁ × input_tokens
+- Flash Lite: β₁ ≈ 0.0002 (2ms per 10K input tokens)
+- Flash: β₁ ≈ 0.0002 (similar scaling)
+- Pro: β₁ ≈ 0.6061 (much higher baseline latency)
+```
+
+### Model Selection Guidelines
+
+🚀 **For Real-time Applications** (chatbots, interactive tools):
+- **Choose**: Gemini 2.5 Flash Lite
+- **Why**: Sub-10ms TTFT, good throughput, excellent responsiveness
+
+⚡ **For High-volume Batch Processing**:
+- **Choose**: Gemini 2.5 Flash
+- **Why**: Highest throughput (2.4K tok/s), efficient for large workloads
+
+🎯 **For Quality-critical Tasks** (analysis, reasoning):
+- **Choose**: Gemini 2.5 Pro
+- **Why**: Consistent performance, better reasoning capabilities
+
+## 🔧 Adapting to Google Developer Gemini API
+
+### Required Code Changes
+
+To use Google's official Gemini API instead of OpenRouter:
+
+1. **Install Google AI Python SDK:**
+   ```bash
+   pip install google-generativeai
+   ```
+
+2. **Update API Configuration** in `measure_performance_async.py` and `measure_performance.py`:
+   ```python
+   # Replace OpenRouter imports:
+   # import openai
+   
+   # With Google AI imports:
+   import google.generativeai as genai
+   
+   # Replace OpenRouter client initialization:
+   # client = openai.AsyncOpenAI(...)
+   
+   # With Google AI configuration:
+   genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
+   model = genai.GenerativeModel('gemini-2.5-flash')
+   ```
+
+3. **Update Model Names** in your test configurations:
+   ```python
+   # OpenRouter format:
+   "google/gemini-2.5-flash-preview-05-20"
+   
+   # Google AI format:
+   "gemini-2.5-flash"
+   "gemini-2.5-pro"
+   ```
+
+4. **Modify API Calls** (around line 100 in async script):
+   ```python
+   # Replace OpenRouter chat completion:
+   # response = await client.chat.completions.create(...)
+   
+   # With Google AI generate_content:
+   response = await model.generate_content_async(prompt_text)
+   ```
+
+5. **Update API Key Environment Variable:**
+   ```bash
+   # Instead of:
+   export OPENROUTER_API_KEY=your_key
+   
+   # Use:
+   export GOOGLE_API_KEY=your_google_api_key
+   ```
+
+### Getting Google API Key
+
+1. Visit [Google AI Studio](https://aistudio.google.com/)
+2. Click "Get API Key" → "Create API Key"
+3. Copy the generated key to your environment
+
+### Rate Limits & Pricing
+
+- **Google Direct API**: Often higher rate limits than OpenRouter
+- **Pricing**: Check [Google AI Pricing](https://ai.google.dev/pricing) for current rates
+- **Free Tier**: Available with generous quotas for testing
 
 ## Performance Notes
 

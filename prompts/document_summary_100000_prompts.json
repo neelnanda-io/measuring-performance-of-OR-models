@@ -1,7 +1,7 @@
 [
   {
     "id": "document_summary_100000_5",
-    "prompt": "Please summarize the following text in 2-3 sentences:\n\nArtificial intelligence (AI) is the capability of computational systems to perform tasks typically associated with human intelligence, such as learning, reasoning, problem-solving, perception, and decision-making. It is a field of research in computer science that develops and studies methods and software that enable machines to perceive their environment and use learning and intelligence to take actions that maximize their chances of achieving defined goals.",
+    "prompt": "Please summarize the following text in 2-3 sentences:\n\nThe Renaissance is a period of history and a European cultural movement covering the 15th and 16th centuries. It marked the transition from the Middle Ages to modernity and was characterized by an effort to revive and surpass the ideas and achievements of classical antiquity. Associated with great social change in most fields and disciplines, including art, architecture, politics, literature, exploration and science, the Renaissance was first centered in the Republic of Florence, then spread to the rest of Italy and later throughout Europe. The term rinascita (\"rebirth\") first appeared in Lives of the Artists by Giorgio Vasari, while the corresponding French word renaissance was adopted into English as the term for this period during the 1830s.",
     "type": "document_summary_100000",
     "input_tokens": 100000,
     "expected_output_tokens": 50

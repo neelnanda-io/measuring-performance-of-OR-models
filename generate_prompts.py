@@ -34,6 +34,98 @@ def generate_repetitive_content(word, target_tokens):
     content = (word + " ") * target_tokens
     return content.strip()
 
+def get_simple_dictionary():
+    """Get 500 common single-token words."""
+    return [
+        "the", "be", "to", "of", "and", "a", "in", "that", "have", "i",
+        "it", "for", "not", "on", "with", "he", "as", "you", "do", "at",
+        "this", "but", "his", "by", "from", "they", "we", "say", "her", "she",
+        "or", "an", "will", "my", "one", "all", "would", "there", "their", "what",
+        "so", "up", "out", "if", "about", "who", "get", "which", "go", "me",
+        "when", "make", "can", "like", "time", "no", "just", "him", "know", "take",
+        "people", "into", "year", "your", "good", "some", "could", "them", "see", "other",
+        "than", "then", "now", "look", "only", "come", "its", "over", "think", "also",
+        "back", "after", "use", "two", "how", "our", "work", "first", "well", "way",
+        "even", "new", "want", "because", "any", "these", "give", "day", "most", "us",
+        "is", "was", "are", "been", "has", "had", "were", "said", "each", "which",
+        "she", "do", "how", "their", "if", "will", "up", "other", "about", "out",
+        "many", "then", "them", "these", "so", "some", "her", "would", "make", "like",
+        "into", "him", "time", "has", "two", "more", "go", "no", "way", "could",
+        "my", "than", "first", "been", "call", "who", "its", "now", "find", "long",
+        "down", "day", "did", "get", "come", "made", "may", "part", "over", "new",
+        "sound", "take", "only", "little", "work", "know", "place", "year", "live", "me",
+        "back", "give", "most", "very", "after", "thing", "our", "name", "good", "sentence",
+        "man", "think", "say", "great", "where", "help", "through", "much", "before", "line",
+        "right", "too", "mean", "old", "any", "same", "tell", "boy", "follow", "came",
+        "want", "show", "also", "around", "form", "three", "small", "set", "put", "end",
+        "why", "again", "turn", "here", "off", "went", "old", "number", "great", "tell",
+        "men", "say", "small", "every", "found", "still", "between", "name", "should", "home",
+        "big", "give", "air", "line", "set", "own", "under", "read", "last", "never",
+        "us", "left", "end", "along", "while", "might", "next", "sound", "below", "saw",
+        "something", "thought", "both", "few", "those", "always", "looked", "show", "large", "often",
+        "together", "asked", "house", "don't", "world", "going", "want", "school", "important", "until",
+        "form", "food", "keep", "children", "feet", "land", "side", "without", "boy", "once",
+        "animal", "life", "enough", "took", "sometimes", "four", "head", "above", "kind", "began",
+        "almost", "live", "page", "got", "earth", "need", "far", "hand", "high", "year",
+        "mother", "light", "country", "father", "let", "night", "picture", "being", "study", "second",
+        "soon", "story", "since", "white", "ever", "paper", "hard", "near", "sentence", "better",
+        "best", "across", "during", "today", "however", "sure", "knew", "it's", "try", "told",
+        "young", "sun", "thing", "whole", "hear", "example", "heard", "several", "change", "answer",
+        "room", "sea", "against", "top", "turned", "learn", "point", "city", "play", "toward",
+        "five", "himself", "usually", "money", "seen", "didn't", "car", "morning", "i'm", "body",
+        "upon", "family", "later", "turn", "move", "face", "door", "cut", "done", "group",
+        "true", "leave", "color", "red", "list", "though", "feel", "talk", "bird", "soon",
+        "grown", "paper", "open", "example", "begin", "life", "always", "those", "both", "paper",
+        "together", "got", "group", "often", "run", "important", "begin", "thought", "example", "children",
+        "side", "feet", "car", "mile", "night", "walk", "white", "sea", "began", "grow",
+        "took", "river", "four", "carry", "state", "once", "book", "hear", "stop", "without",
+        "second", "later", "miss", "idea", "enough", "eat", "face", "watch", "far", "indian",
+        "really", "almost", "let", "above", "girl", "sometimes", "mountain", "cut", "young", "talk",
+        "soon", "list", "song", "being", "leave", "family", "it's", "on", "never", "started",
+        "city", "earth", "eyes", "light", "thought", "head", "under", "story", "saw", "left",
+        "don't", "few", "while", "along", "might", "close", "something", "seem", "next", "hard",
+        "open", "example", "begin", "life", "always", "those", "both", "paper", "together", "got",
+        "group", "often", "run", "important", "begin", "thought", "example", "children", "side", "feet",
+        "car", "mile", "night", "walk", "white", "sea", "began", "grow", "took", "river",
+        "four", "carry", "state", "once", "book", "hear", "stop", "without", "second", "later"
+    ]
+
+def generate_repeat_after_me_tasks():
+    """Generate repeat-after-me tasks with simple dictionary words."""
+    tasks = []
+    dictionary = get_simple_dictionary()
+    token_sizes = [10000, 50000, 100000, 250000, 450000]
+    
+    for tokens in token_sizes:
+        # Generate random sequence of words (tokens ≈ words for simple words)
+        # Use 80% of target tokens for the word sequence (leave room for prompt)
+        target_words = int(tokens * 0.8)
+        word_sequence = []
+        for _ in range(target_words):
+            word_sequence.append(random.choice(dictionary))
+        
+        word_string = " ".join(word_sequence)
+        
+        # Create prompt asking to repeat verbatim
+        prompt = f"Please repeat the following text exactly as written, word for word:\n\n{word_string}\n\nRepeat the text above verbatim:"
+        
+        # Mark long tasks
+        is_long = tokens > 50000
+        
+        # More accurate token estimation
+        estimated_input_tokens = len(prompt) // 4  # ~4 chars per token
+        
+        tasks.append({
+            "id": f"repeat_after_me_{tokens}_1",
+            "prompt": prompt,
+            "type": f"repeat_after_me_{tokens}",
+            "input_tokens": estimated_input_tokens,
+            "expected_output_tokens": target_words,  # Expect back the word sequence
+            "is_long": is_long
+        })
+    
+    return tasks
+
 def generate_math_problems():
     """Generate math problems of varying difficulty."""
     problems = [
@@ -113,18 +205,23 @@ def generate_document_tasks():
 def generate_repetitive_tasks():
     """Generate tasks with repetitive content to test long context."""
     tasks = []
-    words = ["apple", "science", "democracy", "quantum", "stellar"]
-    token_sizes = [1000, 10000, 50000, 100000]
+    words = ["cat", "dog", "sun", "run", "yes"]  # Simple single-token words
+    token_sizes = [1000, 10000, 50000, 100000, 250000, 500000, 900000]
     
     for i, tokens in enumerate(token_sizes):
         word = random.choice(words)
         content = generate_repetitive_content(word, tokens)
+        
+        # Mark long tasks
+        is_long = tokens > 50000
+        
         tasks.append({
             "id": f"repetitive_word_{tokens}_{i+1}",
             "prompt": f"What word is repeated in the following text?\n\n{content}",
             "type": f"repetitive_word_{tokens}",
             "input_tokens": tokens,
-            "expected_output_tokens": 10
+            "expected_output_tokens": 10,
+            "is_long": is_long
         })
     
     return tasks
@@ -137,21 +234,24 @@ def generate_high_output_tasks():
             "prompt": "List all numbers from 1 to 10000, separated by commas.",
             "type": "number_list_10k",
             "input_tokens": 20,
-            "expected_output_tokens": 50000
+            "expected_output_tokens": 50000,
+            "is_long": False  # Under 50K
         },
         {
             "id": "number_list_100k_1",
             "prompt": "List all numbers from 1 to 100000, separated by commas.",
             "type": "number_list_100k",
             "input_tokens": 20,
-            "expected_output_tokens": 100000
+            "expected_output_tokens": 100000,
+            "is_long": True  # Over 50K
         },
         {
             "id": "long_encyclopedia_1",
             "prompt": "Write a comprehensive encyclopedia entry about artificial intelligence, covering history, current state, applications, challenges, and future prospects. Be extremely detailed and thorough.",
             "type": "long_encyclopedia",
             "input_tokens": 50,
-            "expected_output_tokens": 10000
+            "expected_output_tokens": 10000,
+            "is_long": False  # Under 50K
         }
     ]
     return tasks
@@ -208,6 +308,10 @@ def generate_all_prompts():
     # High output tasks
     high_output_tasks = generate_high_output_tasks()
     all_prompts.extend(high_output_tasks)
+    
+    # Repeat after me tasks
+    repeat_tasks = generate_repeat_after_me_tasks()
+    all_prompts.extend(repeat_tasks)
     
     # Add simple tasks
     simple_tasks = [
