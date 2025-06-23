@@ -25,18 +25,14 @@ class PerformanceMeasurer:
         self.model_name = model_name
         self.results = []
     
-    def load_api_key(self, secrets_file: str = "api.secrets") -> str:
-        """Load API key from secrets file."""
-        try:
-            with open(secrets_file, 'r') as f:
-                for line in f:
-                    if line.startswith('OPENROUTER_API_KEY='):
-                        return line.split('=', 1)[1].strip()
-            raise ValueError("OPENROUTER_API_KEY not found in secrets file")
-        except FileNotFoundError:
-            print(f"Error: {secrets_file} not found. Please create it with your OpenRouter API key.")
-            print("Format: OPENROUTER_API_KEY=your_key_here")
+    def load_api_key(self) -> str:
+        """Load API key from environment variable."""
+        api_key = os.getenv('OPENROUTER_API_KEY')
+        if not api_key:
+            print("Error: OPENROUTER_API_KEY environment variable not found.")
+            print("Please set it with: export OPENROUTER_API_KEY=your_key_here")
             sys.exit(1)
+        return api_key
     
     def encode_image(self, image_path: str) -> str:
         """Encode image to base64."""
@@ -178,8 +174,8 @@ class PerformanceMeasurer:
             result = self.measure_single_prompt(prompt_data)
             self.results.append(result)
             
-            # Small delay between requests to be respectful to the API
-            time.sleep(0.5)
+            # Delay between requests for rate limiting (4 requests/min = 15s between requests)
+            time.sleep(20)
     
     def save_results(self, filename: str) -> None:
         """Save results to CSV file."""
@@ -232,13 +228,12 @@ def main():
     parser.add_argument("model", help="OpenRouter model name (e.g., google/gemini-2.0-flash-exp:free)")
     parser.add_argument("--max-prompts", type=int, help="Maximum number of prompts to test")
     parser.add_argument("--output", default="performance_results.csv", help="Output CSV filename")
-    parser.add_argument("--secrets-file", default="api.secrets", help="Path to API secrets file")
     
     args = parser.parse_args()
     
     # Initialize measurer
     measurer = PerformanceMeasurer("", args.model)
-    api_key = measurer.load_api_key(args.secrets_file)
+    api_key = measurer.load_api_key()
     measurer = PerformanceMeasurer(api_key, args.model)
     
     # Load prompts

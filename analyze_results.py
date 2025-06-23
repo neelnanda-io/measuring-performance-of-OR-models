@@ -90,7 +90,8 @@ class ResultsAnalyzer:
         analysis_dir.mkdir(exist_ok=True)
         
         # Set up the plotting style
-        plt.style.use('seaborn-v0_8')
+        plt.style.use('default')
+        sns.set_palette("husl")
         colors = plt.cm.Set1(np.linspace(0, 1, len(self.models)))
         
         # 1. Time to first token vs Input tokens

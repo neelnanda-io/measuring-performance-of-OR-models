@@ -1,0 +1,28 @@
+{
+  "google/gemini-2.0-flash-exp:free": {
+    "total_tests": 4,
+    "avg_time_to_first_token": 1.9286,
+    "std_time_to_first_token": 0.324579738533795,
+    "avg_time_per_input_token": 0.20406569940476194,
+    "avg_throughput": 1208.6125,
+    "std_throughput": 884.0124656502305,
+    "avg_total_time": 2.022325,
+    "avg_time_per_total_token": 0.06799823717948718,
+    "median_throughput": 1242.12,
+    "min_throughput": 100.38,
+    "max_throughput": 2249.83,
+    "avg_input_tokens": 11.25,
+    "avg_output_tokens": 24.5,
+    "correlations": {
+      "time_to_first_token_vs_input_tokens": 0.4793331182180959,
+      "time_to_first_token_vs_output_tokens": 0.9713172828033206,
+      "time_to_first_token_vs_total_tokens": 0.9988493579270695,
+      "throughput_tokens_per_sec_vs_input_tokens": 0.6636940209290304,
+      "throughput_tokens_per_sec_vs_output_tokens": 0.2013889766955607,
+      "throughput_tokens_per_sec_vs_total_tokens": 0.36883454243982944,
+      "total_time_vs_input_tokens": 0.1444711825694916,
+      "total_time_vs_output_tokens": 0.9597405913152813,
+      "total_time_vs_total_tokens": 0.892607140603394
+    }
+  }
+}

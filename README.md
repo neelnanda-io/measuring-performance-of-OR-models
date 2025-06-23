@@ -26,9 +26,9 @@ A comprehensive benchmarking tool for measuring the performance characteristics 
 
 1. Clone this repository
 2. Install dependencies: `pip install -r requirements.txt` 
-3. Add your OpenRouter API key to `api.secrets` file:
-   ```
-   OPENROUTER_API_KEY=your_key_here
+3. Set your OpenRouter API key:
+   ```bash
+   export OPENROUTER_API_KEY=your_key_here
    ```
 4. Generate test data:
    ```bash
