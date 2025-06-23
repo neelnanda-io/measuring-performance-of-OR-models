@@ -57,12 +57,26 @@ python run_tests.py
 ```
 
 ### Analysis
+
+**Command Line Analysis:**
 ```bash
 # Analyze single model results
 python analyze_results.py results/performance_results.csv
 
 # Compare multiple models
 python analyze_results.py results/*.csv
+```
+
+**Interactive Analysis (VS Code):**
+```bash
+# Quick exploration with inline graphs
+code interactive_analysis.py  # Run cells with Ctrl+Enter
+
+# Lightweight exploration
+code quick_explore.py
+
+# Advanced statistical analysis
+code advanced_analysis.py
 ```
 
 ## Output Files
@@ -72,6 +86,8 @@ python analyze_results.py results/*.csv
 - Columns: model_name, prompt_type, input_tokens, output_tokens, time_to_first_token, throughput_tokens_per_sec, total_time, etc.
 
 ### Analysis Directory (`analysis/`)
+
+**Automated Reports:**
 - `performance_report.md`: Comprehensive analysis report
 - `summary_statistics.json`: Numerical summaries and correlations
 - Visualization PNGs:
@@ -79,6 +95,12 @@ python analyze_results.py results/*.csv
   - `throughput_vs_output.png`: Generation speed patterns
   - `throughput_distribution.png`: Speed consistency comparison
   - `performance_by_task_type.png`: Task-specific performance heatmap
+
+**Interactive Analysis Outputs:**
+- `processed_results.csv`: Enhanced dataset with calculated metrics
+- `interactive_statistics.json`: Detailed statistics from interactive analysis
+- `comprehensive_analysis.csv`: Full dataset with advanced features
+- `model_comparison.json`: Side-by-side model performance comparison
 
 ## Key Metrics Measured
 
@@ -105,10 +127,42 @@ Edit `models_config.json` to:
 - Qwen 2.5 series
 - Any OpenRouter-supported model
 
+## Interactive Analysis Features
+
+### VS Code Jupyter-Style Analysis
+The project includes three interactive Python files optimized for VS Code's Python Interactive mode:
+
+1. **`interactive_analysis.py`** - Comprehensive step-by-step analysis
+   - Load and process multiple result files
+   - Generate publication-quality visualizations
+   - Calculate detailed statistics and correlations
+   - Customizable analysis sections
+
+2. **`quick_explore.py`** - Lightweight rapid exploration
+   - Quick model performance overview
+   - Instant throughput and latency plots
+   - Task-specific performance breakdown
+   - Efficiency calculations
+
+3. **`advanced_analysis.py`** - Statistical deep-dive
+   - Statistical significance testing between models
+   - Performance clustering and PCA analysis
+   - Task complexity scoring
+   - Performance scaling analysis
+   - Correlation heatmaps
+
+### Usage in VS Code
+1. Open any `.py` file above in VS Code
+2. Use `Ctrl+Enter` to run individual cells
+3. Graphs appear in the Interactive window
+4. Modify variables and re-run for custom analysis
+5. Export results for further processing
+
 ## Performance Notes
 
 - Tests are sorted by complexity (simple first) for easier debugging
 - Automatic retry logic for API failures
-- Respectful rate limiting between requests
+- Respectful rate limiting between requests (20s default)
 - Support for vision models with base64 image encoding
 - Handles edge cases like empty responses and timeouts
+- Interactive analysis supports real-time exploration and follow-up questions
